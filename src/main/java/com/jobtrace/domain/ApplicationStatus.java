@@ -24,5 +24,5 @@ public class ApplicationStatus {
 
     private String status;
 
-    private LocalDateTime changed_at;
+    private LocalDateTime changedAt;
 }
