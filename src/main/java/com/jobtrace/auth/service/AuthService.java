@@ -11,7 +11,7 @@ public interface AuthService {
     SignUpResponse signUp(SignUpRequest request);
 
     //로그인
-//oginResponse login(LoginRequest request);
+    LoginResponse login(LoginRequest request);
 
     //회원탈퇴
  //   void withdraw(Long userId);

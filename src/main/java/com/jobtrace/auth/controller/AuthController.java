@@ -1,6 +1,8 @@
 package com.jobtrace.auth.controller;
 
+import com.jobtrace.auth.dto.request.LoginRequest;
 import com.jobtrace.auth.dto.request.SignUpRequest;
+import com.jobtrace.auth.dto.response.LoginResponse;
 import com.jobtrace.auth.dto.response.SignUpResponse;
 import com.jobtrace.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,12 @@ public class AuthController {
         SignUpResponse signUpResponse = authService.signUp(signUpRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(signUpResponse);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login (@RequestBody LoginRequest loginRequest){
+        LoginResponse loginResponse = authService.login(loginRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
     }
 
 }
