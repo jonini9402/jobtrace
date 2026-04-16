@@ -14,5 +14,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     void deleteByEmail(String email);
 
-    CharSequence findBypassword(String password);
+    CharSequence findByPassword(String password);
 }

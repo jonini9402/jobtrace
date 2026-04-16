@@ -5,9 +5,13 @@ import com.jobtrace.domain.User;
 import com.jobtrace.job.dto.request.JobPostingRequest;
 import com.jobtrace.job.dto.response.JobPostingResponse;
 import com.jobtrace.repository.JobPostingRepository;
+import com.jobtrace.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +38,7 @@ public class JobPostingServiceImpl implements JobPostingService{
         //entity 객체를 레포지토리에 저장
         jobPostingRepository.save(jobPosting);
 
-        //JobPostingResponse의 빌더 객체 반환
+        //JobPostingResponse의 entity의 빌더 객체 반환
         return JobPostingResponse.builder()
                 .id(jobPosting.getId())
                 .userId(user.getId())
@@ -48,5 +52,26 @@ public class JobPostingServiceImpl implements JobPostingService{
     }
 
 
-}
+    public List<JobPostingResponse> getMyPosts(User user){
+        return jobPostingRepository.findAllByUser(user)
+                .stream()// stream 체인 열어주기
+                .map(jobPosting -> JobPostingResponse.builder()
+                    .id(jobPosting.getId())
+                    .userId(user.getId())
+                    .companyName(jobPosting.getCompanyName())
+                    .role(jobPosting.getRole())
+                    .jobUrl(jobPosting.getJobUrl())
+                    .platform(jobPosting.getPlatform())
+                    .startDate(jobPosting.getStartDate())
+                    .deadline(jobPosting.getDeadline())
+                    .build())
+                .collect(Collectors.toList()); // stream 체인 마무리
+
+    }
+
+
+
+    }
+
+
 

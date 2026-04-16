@@ -11,10 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,7 +22,7 @@ public class JobPostingController {
 
     private final JobPostingService jobPostingService;
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<JobPostingResponse> jobPost(@RequestBody JobPostingRequest jobPostingRequest,
                                                       @AuthenticationPrincipal User user){
 
@@ -35,6 +34,11 @@ public class JobPostingController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @GetMapping
+    public ResponseEntity<List<JobPostingResponse>> getPost(@AuthenticationPrincipal User user){
+        List<JobPostingResponse> responses = jobPostingService.getMyPosts(user);
+    return ResponseEntity.status(HttpStatus.OK).body(responses);
+    }
 
 
 }
