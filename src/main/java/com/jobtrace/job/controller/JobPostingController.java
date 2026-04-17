@@ -40,5 +40,11 @@ public class JobPostingController {
     return ResponseEntity.status(HttpStatus.OK).body(responses);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<JobPostingResponse> getPostDetail(@PathVariable Long id,
+                                                            @AuthenticationPrincipal User user){
+        JobPostingResponse response = jobPostingService.getPostDetail(id, user);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
 }
