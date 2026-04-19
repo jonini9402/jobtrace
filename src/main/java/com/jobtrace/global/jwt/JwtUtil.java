@@ -57,6 +57,7 @@ public class JwtUtil {
         throw new CustomException(ErrorCode.TOKEN_NOT_FOUND);
     }
 
+    //jwt의 페이로드 안에 정보들이 들어있는데 이 정보 하나하나를 Claim 이라고 함
     public Claims extractClaims (String token){
         return Jwts.parserBuilder()
                 .setSigningKey(key)

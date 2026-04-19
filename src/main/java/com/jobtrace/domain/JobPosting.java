@@ -2,6 +2,7 @@ package com.jobtrace.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "job_posting")
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class JobPosting extends BaseEntity{
@@ -25,17 +27,21 @@ public class JobPosting extends BaseEntity{
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "company_name")
     private String companyName;
 
     private String role;
 
+    @Column(name = "job_url")
     private String jobUrl;
 
     private String platform;
 
+    @Column(name = "start_date")
     private LocalDate startDate;
 
-    private LocalDate deadLine;
+    @Column(name = "dead_line")
+    private LocalDate deadline;
 
     private String memo;
 

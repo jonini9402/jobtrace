@@ -45,7 +45,7 @@ public class AuthServiceImpl implements AuthService {
         //DB에 저장
         userRepository.save(user);
 
-        //signUpResponce 반환
+        //signUpResponce 의 빌더 객체 반환
         return SignUpResponse.builder()
                 .email(user.getEmail())
                 .name(user.getName())
@@ -68,7 +68,7 @@ public class AuthServiceImpl implements AuthService {
         //일치하면 JWT 토큰 생성
         String token = jwtUtil.createToken(user.getId(), user.getEmail());
 
-        //응답 반환
+        //응답의 빌더 객체 반환
          return LoginResponse.builder()
                 .accessToken(token)
                 .name(user.getName())
