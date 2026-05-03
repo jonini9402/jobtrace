@@ -20,4 +20,6 @@ public class JobPostingResponse {
     private String platform;
     private LocalDate deadline;
     private LocalDate startDate;
+    private String status;
+    private String memo;
 }

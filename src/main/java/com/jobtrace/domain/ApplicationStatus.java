@@ -2,6 +2,7 @@ package com.jobtrace.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "application_status")
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ApplicationStatus {

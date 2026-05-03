@@ -3,8 +3,6 @@ package com.jobtrace.config;
 import com.jobtrace.global.jwt.JwtFilter;
 import com.jobtrace.global.jwt.JwtUtil;
 import com.jobtrace.repository.UserRepository;
-import io.jsonwebtoken.Jwt;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

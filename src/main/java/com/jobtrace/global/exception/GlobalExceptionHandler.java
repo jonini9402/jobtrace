@@ -22,8 +22,8 @@ public class GlobalExceptionHandler {
         return switch(errorCode) {
             case DUPLICATE_EMAIL -> HttpStatus.CONFLICT; //409
             case USER_NOT_FOUND, POST_NOT_FOUND -> HttpStatus.NOT_FOUND; //404
-            case INVALID_PASSWORD -> HttpStatus.BAD_REQUEST; //400
-            case TOKEN_NOT_FOUND,UNAUTHORIZED -> HttpStatus.UNAUTHORIZED; //401
+            //case  -> HttpStatus.BAD_REQUEST; //400
+            case TOKEN_NOT_FOUND,UNAUTHORIZED,INVALID_PASSWORD -> HttpStatus.UNAUTHORIZED; //401
         };
     }
 
