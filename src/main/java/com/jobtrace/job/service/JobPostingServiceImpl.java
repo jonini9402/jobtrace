@@ -3,6 +3,7 @@ package com.jobtrace.job.service;
 import com.jobtrace.domain.ApplicationStatus;
 import com.jobtrace.domain.JobPosting;
 import com.jobtrace.domain.User;
+import com.jobtrace.global.common.StatusType;
 import com.jobtrace.global.exception.CustomException;
 import com.jobtrace.global.exception.ErrorCode;
 import com.jobtrace.job.dto.request.ApplicationStatusRequest;
@@ -45,7 +46,15 @@ public class JobPostingServiceImpl implements JobPostingService{
                 .build();
 
         //entity 객체를 레포지토리에 저장
-        jobPostingRepository.save(jobPosting);
+        JobPosting savedJobPosting =  jobPostingRepository.save(jobPosting);
+
+        //최초로 등록 시, BOOKMARKED 상태로 저장
+        ApplicationStatus initialStatus = ApplicationStatus.builder()
+                .jobPosting(savedJobPosting)
+                .status(StatusType.BOOKMARKED)
+                .changedAt(LocalDateTime.now())
+                .build();
+        applicationStatusRepository.save(initialStatus);
 
         //JobPostingResponse의 entity의 빌더 객체 반환
         return JobPostingResponse.builder()
