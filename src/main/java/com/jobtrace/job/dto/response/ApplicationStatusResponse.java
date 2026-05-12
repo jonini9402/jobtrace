@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ApplicationStatusResponse {
     private Long id;
+    private Long jobPostingId;
     private String status;
     private LocalDateTime changeAt;
 }

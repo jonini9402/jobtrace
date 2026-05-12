@@ -66,6 +66,7 @@ public class JobPostingServiceImpl implements JobPostingService{
                 .platform(jobPosting.getPlatform())
                 .startDate(jobPosting.getStartDate())
                 .deadline(jobPosting.getDeadline())
+                .status(initialStatus.getStatus())
                 .build();
     }
 
@@ -210,6 +211,7 @@ public class JobPostingServiceImpl implements JobPostingService{
 
         return ApplicationStatusResponse.builder()
                 .id(saved.getId())
+                .jobPostingId(jobPosting.getId())
                 .status(saved.getStatus())
                 .changeAt(saved.getChangedAt())
                 .build();
