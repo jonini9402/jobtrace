@@ -38,3 +38,6 @@ out/
 
 ###
 application-local.yml
+
+###frontend
+jobtrace-frontend/
