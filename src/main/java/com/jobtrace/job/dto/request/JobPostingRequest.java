@@ -18,4 +18,5 @@ public class JobPostingRequest {
     private String platform;
     private LocalDate deadline;
     private LocalDate startDate;
+    private String experienceLevel;
 }

@@ -41,8 +41,11 @@ public class JobPosting extends BaseEntity{
     @Column(name = "start_date")
     private LocalDate startDate;
 
-    @Column(name = "dead_line")
+    @Column(name = "dead_line", nullable = true)
     private LocalDate deadline;
 
     private String memo;
+
+    @Column(name = "experience_level")
+    private String experienceLevel;
 }

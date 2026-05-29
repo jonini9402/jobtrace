@@ -22,4 +22,5 @@ public class JobPostingResponse {
     private LocalDate startDate;
     private String status;
     private String memo;
+    private String experienceLevel;
 }
