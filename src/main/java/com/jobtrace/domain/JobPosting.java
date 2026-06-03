@@ -25,6 +25,9 @@ public class JobPosting extends BaseEntity{
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "jobPosting", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<ApplicationStatus> applicationStatuses;
+
     @Column(name = "company_name")
     private String companyName;
 
@@ -42,11 +45,4 @@ public class JobPosting extends BaseEntity{
     private LocalDate deadline;
 
     private String memo;
-
-
-
-
-
-
-
 }
