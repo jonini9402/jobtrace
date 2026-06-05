@@ -41,3 +41,5 @@ application-local.yml
 
 ###frontend
 jobtrace-frontend/
+
+.env
