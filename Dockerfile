@@ -7,6 +7,7 @@ WORKDIR /app
 
 COPY . .
 #[gradlew로 빌드] -> jar 만들기
+RUN chmod +x gradlew
 RUN ./gradlew build -x test
 
 # 2단계: 실행
