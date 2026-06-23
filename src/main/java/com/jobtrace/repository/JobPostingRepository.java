@@ -21,4 +21,9 @@ public interface JobPostingRepository extends JpaRepository<JobPosting, Long> {
             "ORDER BY 1")
     List<Object[]> countMonthly(@Param("user") User user);
 
+    //fetch join으로 개선하여 N+1 문제 해결
+    @Query("SELECT DISTINCT j FROM JobPosting j " +
+            "LEFT JOIN FETCH j.applicationStatuses " +
+            "WHERE j.user = :user")
+    List<JobPosting> findAllByUserWithStatuses(@Param("user") User user);
 }

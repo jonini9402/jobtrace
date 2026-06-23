@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,17 +74,15 @@ public class JobPostingServiceImpl implements JobPostingService{
 
     public List<JobPostingResponse> getMyPosts(User user){
 
-        return jobPostingRepository.findAllByUser(user)
+        return jobPostingRepository.findAllByUserWithStatuses(user)
                 // 1. 내 공고 전체를 List<JobPosting>으로 가져옴
                 .stream() //2. 리스트를 하나씩 꺼낼 준비
                 .map(jobPosting -> {
-                    //3. JobPosting 하나를 JobPostingResponse 하나로 변환
-
-                    //4. 공고의 최신상태 틈새 조회
-                        String status = applicationStatusRepository
-                                .findTopByJobPostingOrderByChangedAtDesc(jobPosting)
-                                .map(ApplicationStatus::getStatus)
-                                .orElse("미지원");
+                    // fetch join으로 이미 로딩된 컬렉션에서 최신 상태 꺼냄 (추가 쿼리 없음)
+                    String status = jobPosting.getApplicationStatuses().stream()
+                            .max(Comparator.comparing(ApplicationStatus::getChangedAt))
+                            .map(ApplicationStatus::getStatus)
+                            .orElse("미지원");
 
                 //5. 조회한 status 포함해서 Response 조립
                 return JobPostingResponse.builder()
