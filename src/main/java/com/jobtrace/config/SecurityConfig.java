@@ -2,6 +2,7 @@ package com.jobtrace.config;
 
 import com.jobtrace.global.jwt.JwtFilter;
 import com.jobtrace.global.jwt.JwtUtil;
+import com.jobtrace.global.redis.TokenBlacklistService;
 import com.jobtrace.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwtUtil, UserRepository userRepository) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwtUtil, UserRepository userRepository, TokenBlacklistService tokenBlacklistService) throws Exception {
         http
                 //CORS 설정
                 .cors(cors -> cors.configurationSource(request -> {
@@ -36,7 +37,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 //인증 필터 앞에 Filter가 위치
-                .addFilterBefore(new JwtFilter(jwtUtil, userRepository),
+                .addFilterBefore(new JwtFilter(jwtUtil, userRepository,tokenBlacklistService),
                         UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

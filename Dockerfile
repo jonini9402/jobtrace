@@ -4,7 +4,7 @@ WORKDIR /app
 
 # 빌드 단계 없음
 # 로컬에서 미리 빌드된 jar를 그대로 복사
-COPY jobtrace-0.0.1-SNAPSHOT.jar .
+COPY build/libs/jobtrace-0.0.1-SNAPSHOT.jar .
 
 #실행
 CMD ["java", "-jar", "jobtrace-0.0.1-SNAPSHOT.jar"]

@@ -3,6 +3,7 @@ package com.jobtrace.global.jwt;
 import com.jobtrace.domain.User;
 import com.jobtrace.global.exception.CustomException;
 import com.jobtrace.global.exception.ErrorCode;
+import com.jobtrace.global.redis.TokenBlacklistService;
 import com.jobtrace.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,14 +25,16 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
+    private final TokenBlacklistService tokenBlacklistService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-    //1. 헤더에서 토큰 꺼내기    
+
+        //1. 헤더에서 토큰 꺼내기
     String token = resolveToken(request);
 
         //2. 토큰 유효성 검증
-        if(token != null && jwtUtil.validateToken(token)){
+        if(token != null && jwtUtil.validateToken(token) && !tokenBlacklistService.isBlacklisted(token)){
 
             //3. 토큰에서 이메일 꺼내기
             String email = jwtUtil.getEmail(token);

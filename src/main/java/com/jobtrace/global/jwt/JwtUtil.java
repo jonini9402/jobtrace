@@ -32,12 +32,12 @@ public class JwtUtil {
 
     //키를 초기화
     @PostConstruct
-    public void init(){
+    public void init() {
         byte[] bytes = secretKey.getBytes();
         key = Keys.hmacShaKeyFor(bytes);
     }
 
-    public String createToken (long userId, String email){
+    public String createToken(long userId, String email) {
         Date date = new Date();
         return BEARER_PREFIX +
                 Jwts.builder()
@@ -45,12 +45,12 @@ public class JwtUtil {
                         .claim("email", email)
                         .setExpiration(new Date(date.getTime() + TOKEN_TIME))
                         .setIssuedAt(date)
-                        .signWith(key,signatureAlgorithm)
+                        .signWith(key, signatureAlgorithm)
                         .compact();
     }
 
-    public String subStringToken(String tokenValue){
-        if(StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)){
+    public String subStringToken(String tokenValue) {
+        if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
             return tokenValue.substring(7);
         }
         log.error("Token Not Found");
@@ -58,7 +58,7 @@ public class JwtUtil {
     }
 
     //jwt의 페이로드 안에 정보들이 들어있는데 이 정보 하나하나를 Claim 이라고 함
-    public Claims extractClaims (String token){
+    public Claims extractClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
@@ -68,7 +68,7 @@ public class JwtUtil {
 
     //토큰 유효성 검증
     public boolean validateToken(String token) {
-        try{
+        try {
             extractClaims(token);
             return true;
         } catch (Exception e) {
@@ -78,7 +78,23 @@ public class JwtUtil {
     }
 
     //토큰에서 이메일 꺼내기
-    public String getEmail(String token){
-        return extractClaims(token).get("email" , String.class);
+    public String getEmail(String token) {
+        return extractClaims(token).get("email", String.class);
+    }
+
+    //토큰 남은 만료시간 계산
+    public long getRemainingTime(String token) {
+        //만료시간
+        long expirationTime = extractClaims(token).getExpiration().getTime();
+        //지금 시간
+        long time = new Date().getTime();
+
+        //남은 만료 시간 = 만료시간 - 지금 시간
+        long remainingTime = expirationTime - time;
+
+        return remainingTime;
     }
 }
+
+
+
