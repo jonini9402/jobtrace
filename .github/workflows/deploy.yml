@@ -42,7 +42,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           source: "build/libs/jobtrace-0.0.1-SNAPSHOT.jar"
           target: "/home/ubuntu/jobtrace/"
-          strip_components: 2
+          strip_components: 0
 
       - name: EC2에서 배포
         uses: appleboy/ssh-action@master
